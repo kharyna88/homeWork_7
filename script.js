@@ -1,44 +1,35 @@
-let x = document.querySelectorAll(".audio");
-let y = [];
 
-const key = x.forEach(function(element) {
-  y.push(`document.getElementById("${element.id}")`);
-});
-
-console.log(y);
+const keys = document.querySelectorAll('.keys');
 
 
-function playAudio() {
-console.log(y[3].play()) ;
+function playNote(e) {
+
+  const audio = document.querySelector(`audio[id="${e.keyCode}"]`),
+    key = document.querySelector(`.keys[id="${e.keyCode}"]`);
+
+  if (!key) return;
+
+  audio.currentTime = 0;
+  audio.play();
+
+  key.style.transform = "scale(1.1)";
+  setTimeout(function () {
+    key.style.transform = "scale(1)";
+  }, 100);
 }
 
+keys.forEach(function (div) {
+  let audio = div.getAttribute('id');
+  div.addEventListener('click', function () {
+    let sound = document.getElementById(audio);
+    sound.currentTime = 0;
+    sound.play();
+    div.style.transform = "scale(1.1)";
+    setTimeout(function () {
+      div.style.transform = "scale(1)";
+    }, 100);
+  });
+})
 
+document.addEventListener('keydown', playNote);
 
-
-//const key = document.querySelector('.keys');
-
-function init() {
-  document.addEventListener('keydown', (event) => {
-    switch (event.keyCode) {
-      case 65:
-          playAudio("A");
-        break;
-      case 83:
-        break;
-      case 68:
-        break;
-      case 70:
-        break;
-      case 71:
-        break;
-      case 72:
-        break;
-      case 74:
-        break;
-      case 75:
-        break;
-    };
-  })
-};
-
-init();
